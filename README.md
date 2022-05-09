@@ -6,7 +6,13 @@
 
 ## Sanity
 
-`sanity start` to start dev server
+Install sanity cli : `npm install -g @sanity/cli`
+
+Then, `cd sanity_atelier`
+
+Install sanity : `sanity install`
+
+Start dev server : `sanity start`
 
 ## Next
 
