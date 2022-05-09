@@ -71,14 +71,14 @@ export default function Home({ categories }) {
 					backgroundSize="86%"
 				/>
 				<Box mt={2}>
-					<Heading>FORi</Heading>
+					<Heading mb={1}>FORi</Heading>
 					<Grid templateColumns="repeat(2, 1fr)" gap={2}>
 						{filterCategory('FORi').map((category) => (
 							<CategoryBox category={category} key={category.name} />
 						))}
 					</Grid>
 				</Box>
-				<Box mt={1}>
+				<Box mt={2} mb={1}>
 					<Heading>iiii atelier</Heading>
 					<Grid templateColumns="repeat(2, 1fr)" gap={2}>
 						{filterCategory('iiii atelier').map((category) => (
@@ -88,9 +88,9 @@ export default function Home({ categories }) {
 				</Box>
 			</Box>
 
-			{/* <Button onClick={toggleColorMode}>
+			<Button onClick={toggleColorMode}>
 				Toggle {colorMode === 'light' ? 'Dark' : 'Light'}
-			</Button> */}
+			</Button>
 		</VStack>
 	);
 }

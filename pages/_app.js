@@ -1,9 +1,8 @@
-import 'tailwindcss/tailwind.css';
-import '../styles/globals.css';
+// import 'tailwindcss/tailwind.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import Layout from '../components/Layout';
 import theme from '../theme';
-import Fonts from '../styles/fonts.js';
+import Fonts from '../components/Fonts.js';
 
 function MyApp({ Component, pageProps, router }) {
 	return (
