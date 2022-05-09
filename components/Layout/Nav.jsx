@@ -87,9 +87,9 @@ function Nav(props) {
 								</Link>
 							</NextLink> */}
 							<NextLink href="/" passHref>
-								<Link ml={2}>
+								<Link>
 									<Text fontSize={['2xl', '3xl']} id="logo">
-										atelier
+										select shop
 									</Text>
 								</Link>
 							</NextLink>

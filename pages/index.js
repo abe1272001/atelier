@@ -15,6 +15,8 @@ import {
 	Heading,
 } from '@chakra-ui/react';
 
+import { client, urlFor } from '../lib/sanity-client';
+import CategoryBox from '../components/categoryBox';
 // {
 // 	iiii_atelier;
 // }
@@ -30,38 +32,20 @@ import {
 // Deco;
 // Vintages;
 
-export default function Home() {
+export default function Home({ categories }) {
 	const { colorMode, toggleColorMode } = useColorMode();
-	const categories = [
-		{
-			categoryName: 'Aroma/Scent',
-			imageUrl: '/images/S__14245957.jpg',
-		},
-		{
-			categoryName: 'Parfume',
-			imageUrl: '/images/S__14245962.jpg',
-		},
-		{
-			categoryName: 'Hand',
-			imageUrl: '/images/S__14245935.jpg',
-		},
-		{
-			categoryName: 'Body',
-			imageUrl: '/images/S__14245937.jpg',
-		},
-		{
-			categoryName: 'Tableware',
-			imageUrl: '/images/S__14245959.jpg',
-		},
-		{
-			categoryName: 'Deco',
-			imageUrl: '/images/S__14245938.jpg',
-		},
-		{
-			categoryName: 'Vintages',
-			imageUrl: '/images/S__14245962.jpg',
-		},
-	];
+	console.log(categories);
+	categories.sort((a, b) => {
+		return a.order - b.order;
+	});
+	const filterCategory = (brandName) => {
+		return categories.filter((category) => category.brand === brandName);
+	};
+	const categoriesByFORi = categories.filter(
+		(category) => category.brand === 'FORi'
+	);
+	console.log(filterCategory('FORi'));
+
 	return (
 		<VStack spacing={4} align="stretch">
 			<Head>
@@ -86,38 +70,19 @@ export default function Home() {
 					backgroundRepeat="no-repeat"
 					backgroundSize="86%"
 				/>
-				<Box>
-					<Grid templateColumns="repeat(2, 1fr)" gap={0}>
-						{categories.map((category) => (
-							<NextLink
-								key={category.categoryName}
-								href={`/collection/${category.categoryName}`}
-							>
-								<Link>
-									<GridItem width="100%" bg="gray.100" position="relative">
-										<Image
-											src={category.imageUrl}
-											fit="cover"
-											width="100%"
-											height={['200px', '380px']}
-											alt={category.categoryName}
-										/>
-										<Text
-											textAlign="center"
-											position="absolute"
-											bottom="8px"
-											left="8px"
-											px={3}
-											py={1}
-											borderRadius="base"
-											bg={'whiteAlpha.800'}
-											css={{ backdropFilter: 'blur(8px)' }}
-										>
-											{category.categoryName}
-										</Text>
-									</GridItem>
-								</Link>
-							</NextLink>
+				<Box mt={2}>
+					<Heading>FORi</Heading>
+					<Grid templateColumns="repeat(2, 1fr)" gap={2}>
+						{filterCategory('FORi').map((category) => (
+							<CategoryBox category={category} key={category.name} />
+						))}
+					</Grid>
+				</Box>
+				<Box mt={1}>
+					<Heading>iiii atelier</Heading>
+					<Grid templateColumns="repeat(2, 1fr)" gap={2}>
+						{filterCategory('iiii atelier').map((category) => (
+							<CategoryBox category={category} key={category.name} />
 						))}
 					</Grid>
 				</Box>
@@ -128,4 +93,14 @@ export default function Home() {
 			</Button> */}
 		</VStack>
 	);
+}
+
+export async function getServerSideProps() {
+	const categories = await client.fetch('*[_type == "category"]');
+	console.log(categories);
+	return {
+		props: {
+			categories,
+		},
+	};
 }
